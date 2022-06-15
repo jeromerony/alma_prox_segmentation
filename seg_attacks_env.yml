@@ -1,0 +1,12 @@
+name: seg_attacks
+channels:
+  - pytorch
+  - defaults
+dependencies:
+  - cudatoolkit=11.3.1
+  - python=3.9
+  - pytorch=1.11.0=py3.9_cuda11.3_cudnn8.2.0_0
+  - torchvision=0.12.0
+  - pip:
+    - git+https://github.com/jeromerony/adversarial-library
+    - sacred==0.8.2
