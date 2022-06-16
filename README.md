@@ -1,6 +1,16 @@
-# Proximal Splitting Adversarial Attacks for Semantic Segmentation
+# Proximal Splitting Adversarial Attacks for Semantic Segmentation https://arxiv.org/abs/2206.07179
 
 This repository contains the code of the experiments of the paper. It **does not** contain the code of the ALMA $\mathrm{prox}$ attack proposed in the paper, which is directly implemented in the [adversarial-library](https://github.com/jeromerony/adversarial-library) in the `adv_lib.attacks.segmentation` module. Additionally, the ASMA, DAG, PDGD and PDPGD attacks for segmentation are also implemented there.
+
+#### Citation
+```bibtex
+@article{rony2022proximal,
+  title={Proximal Splitting Adversarial Attacks for Semantic Segmentation},
+  author={Rony, J{\'e}r{\^o}me and Pesquet, Jean-Christophe and {Ben Ayed}, Ismail},
+  journal={arXiv preprint arXiv:2206.07179},
+  year={2022}
+}
+```
 
 ## Getting the necessary files
 
