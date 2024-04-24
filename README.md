@@ -80,12 +80,12 @@ pip install mmsegmentation
 We use sacred to manage the experiments, and refer the user to their documentation: https://sacred.readthedocs.io/en/stable/quickstart.html.
 To perform $\ell_\infty$ untargeted attacks on Pascal VOC 2012 with a DeepLabV3+ ResNet-50, and save the results in `<SAVE_DIR>`, run:
 ```bash
-python attack_experiment.py -F <SAVE_DIR> with dataset.pascal_voc_2012 model.deeplabv3plus_resnet50 cudnn_flag=benchmark attack.alma_prox_linf
+python attack_experiment.py -F <SAVE_DIR> with dataset.pascal_voc_2012 model.deeplabv3plus_resnet50 cudnn_flag=benchmark attack.alma_prox
 ```
 
 Additionally, you can specify a target with either an `.png` containing the targets as colors, or an `int` as the target for every pixel. For instance, on Pascal VOC 2012, to have a background target, simply add the `target=0` arg:
 ```bash
-python attack_experiment.py -F <SAVE_DIR> with dataset.pascal_voc_2012 model.deeplabv3plus_resnet50 cudnn_flag=benchmark attack.alma_prox_linf target=0
+python attack_experiment.py -F <SAVE_DIR> with dataset.pascal_voc_2012 model.deeplabv3plus_resnet50 cudnn_flag=benchmark attack.alma_prox target=0
 ```
 
 To run the experiments on a reduced number of samples, you can also add the `dataset.num_images=10` to attack only the first 10 images of the dataset.
@@ -123,7 +123,7 @@ With all the configurations of the attacks:
    - Linf η=0.003 : `attack.dag attack.gamma=0.003`
  - FMN : `attack.fmn_linf`
  - PDPGD : `attack.pdpgd`
- - ALMA prox : `attack.alma_prox_linf`
+ - ALMA prox : `attack.alma_prox`
 
 ### Results
 

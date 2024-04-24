@@ -52,7 +52,6 @@ def get_alma_cls(distance: str, num_steps: int, alpha: float, lr_reduction: floa
 @attack_ingredient.named_config
 def alma_prox():
     name = 'alma_prox'
-    norm = float('inf')
     num_steps = 500
     lr_init = 0.001
     lr_reduction = 0.1
@@ -67,15 +66,13 @@ def alma_prox():
 
 
 @attack_ingredient.capture
-def get_alma_prox(norm: float, num_steps: int, alpha: float, lr_reduction: float, lr_init: float, scale_min: float,
-                  scale_max: float, _log, rho_init: float = 1, mu_init: float = 1e-4,
-                  scale_init: Optional[float] = None, constraint_masking: bool = True, mask_decay: bool = True,
-                  prox: Optional[str] = None):
-    attack = partial(alma_prox_seg, norm=norm, num_steps=num_steps, lr_init=lr_init, lr_reduction=lr_reduction,
-                     α=alpha, ρ_init=rho_init, μ_init=mu_init,
-                     scale_min=scale_min, scale_max=scale_max, scale_init=scale_init,
-                     constraint_masking=constraint_masking, mask_decay=mask_decay, prox=prox)
-    name = f'ALMA_prox_L{norm}_{num_steps}'
+def get_alma_prox(num_steps: int, alpha: float, lr_reduction: float, lr_init: float, scale_min: float, scale_max: float,
+                  _log, rho_init: float = 1, mu_init: float = 1e-4, scale_init: Optional[float] = None,
+                  constraint_masking: bool = True, mask_decay: bool = True):
+    attack = partial(alma_prox_seg, num_steps=num_steps, lr_init=lr_init, lr_reduction=lr_reduction, α=alpha,
+                     ρ_init=rho_init, μ_init=mu_init, scale_min=scale_min, scale_max=scale_max, scale_init=scale_init,
+                     constraint_masking=constraint_masking, mask_decay=mask_decay)
+    name = f'ALMA_prox_{num_steps}'
     return attack, name
 
 
