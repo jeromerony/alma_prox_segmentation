@@ -48,12 +48,12 @@ class MMSegNormalizer(nn.Module):
         self.register_buffer('mean', torch.as_tensor(mean).view(1, 3, 1, 1))
         self.register_buffer('std', torch.as_tensor(std).view(1, 3, 1, 1))
         self.model = model
-        self.logit_func = model.slide_inference if model.test_cfg['mode'] == 'slide' else model.whole_inference
 
     def forward(self, inputs: Tensor) -> Tensor:
         normalized_inputs = (inputs - self.mean) / self.std
         ori_shape = inputs.shape[-2:] + (inputs.shape[1],)
-        out = self.logit_func(img=normalized_inputs, img_meta=[{'ori_shape': ori_shape, 'flip': False}], rescale=True)
+        img_metas = dict(ori_shape=ori_shape, img_shape=inputs.shape[-2:])
+        out = self.model.inference(normalized_inputs, batch_img_metas=[img_metas])
         return out
 
 

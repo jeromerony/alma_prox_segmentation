@@ -23,7 +23,7 @@ wget -i checkpoints/checkpoint_urls.txt -P checkpoints/
 ```
 And clone the MMSegmentation library at the root of the dir (to retrieve the configs of the models):
 ```bash
-git clone https://github.com/open-mmlab/mmsegmentation
+git clone https://github.com/open-mmlab/mmsegmentation --branch v1.2.2 --single-branch
 ```
 
 Download and extract Pascal VOC 2012 and Cityscapes validation sets to `data` and `data/cityscapes` respectively.
@@ -56,12 +56,12 @@ You need an account to download Cityscapes.
 ## Setting up the environment
 
 The main dependencies are the following:
- - pytorch 1.11.0
- - torchvision 0.12.0
+ - pytorch 1.12.1
+ - torchvision 0.13.1
  - sacred
  - adv_lib https://github.com/jeromerony/adversarial-library
- - mmcv-full
- - mmsegmentation
+ - mmcv-full 2.1.0
+ - mmsegmentation 1.2.2
 
 To setup the environment using conda, you can use the seg_attacks_env.yml file with:
 ```bash
@@ -69,8 +69,8 @@ conda env create -f seg_attacks_env.yml
 ```
 This will install pytorch, torchvision, sacred and adv_lib. To complete the setup, activate the environment `conda activate seg_attacks` and install mmcv-full and mmsegmentation with:
 ```bash
-pip install mmcv-full -f https://download.openmmlab.com/mmcv/dist/cu113/torch1.11/index.html
-pip install mmsegmentation
+pip install mmcv-full==2.1.0 -f https://download.openmmlab.com/mmcv/dist/cu116/torch1.12/index.html
+pip install mmsegmentation==1.2.2
 ```
 
 ## Running experiments

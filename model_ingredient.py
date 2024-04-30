@@ -2,7 +2,7 @@ from typing import Tuple
 
 import torch
 from adv_lib.utils import requires_grad_
-from mmseg.apis import init_segmentor
+from mmseg.apis import init_model
 from sacred import Ingredient
 from torch import nn
 
@@ -50,39 +50,39 @@ def segformer_mitb3():
 _mmseg_configs_checkpoints = {
     'fcn_hrnetv2_w48': {
         'pascal_voc_2012': {
-            'config': 'mmsegmentation/configs/hrnet/fcn_hr48_512x512_40k_voc12aug.py',
+            'config': 'mmsegmentation/configs/hrnet/fcn_hr48_4xb4-40k_voc12aug-512x512.py',
             'checkpoint': 'checkpoints/fcn_hr48_512x512_40k_voc12aug_20200613_222111-1b0f18bc.pth',
         },
         'cityscapes': {
-            'config': 'mmsegmentation/configs/hrnet/fcn_hr48_512x1024_160k_cityscapes.py',
+            'config': 'mmsegmentation/configs/hrnet/fcn_hr48_4xb2-160k_cityscapes-512x1024.py',
             'checkpoint': 'checkpoints/fcn_hr48_512x1024_160k_cityscapes_20200602_190946-59b7973e.pth',
         }
     },
     'deeplabv3plus_resnet50': {
         'pascal_voc_2012': {
-            'config': 'mmsegmentation/configs/deeplabv3plus/deeplabv3plus_r50-d8_512x512_40k_voc12aug.py',
+            'config': 'mmsegmentation/configs/deeplabv3plus/deeplabv3plus_r50-d8_4xb4-40k_voc12aug-512x512.py',
             'checkpoint': 'checkpoints/deeplabv3plus_r50-d8_512x512_40k_voc12aug_20200613_161759-e1b43aa9.pth',
         },
         'cityscapes': {
-            'config': 'mmsegmentation/configs/deeplabv3plus/deeplabv3plus_r50b-d8_512x1024_80k_cityscapes.py',
+            'config': 'mmsegmentation/configs/deeplabv3plus/deeplabv3plus_r50b-d8_4xb2-80k_cityscapes-512x1024.py',
             'checkpoint': 'checkpoints/deeplabv3plus_r50b-d8_512x1024_80k_cityscapes_20201225_213645-a97e4e43.pth',
         },
     },
     'deeplabv3plus_resnet101': {
         'pascal_voc_2012': {
-            'config': 'mmsegmentation/configs/deeplabv3plus/deeplabv3plus_r101-d8_512x512_40k_voc12aug.py',
+            'config': 'mmsegmentation/configs/deeplabv3plus/deeplabv3plus_r101-d8_4xb4-40k_voc12aug-512x512.py',
             'checkpoint': 'checkpoints/deeplabv3plus_r101-d8_512x512_40k_voc12aug_20200613_205333-faf03387.pth',
         },
     },
     'segformer_mitb0': {
         'cityscapes': {
-            'config': 'mmsegmentation/configs/segformer/segformer_mit-b0_8x1_1024x1024_160k_cityscapes.py',
+            'config': 'mmsegmentation/configs/segformer/segformer_mit-b0_8xb1-160k_cityscapes-1024x1024.py',
             'checkpoint': 'checkpoints/segformer_mit-b0_8x1_1024x1024_160k_cityscapes_20211208_101857-e7f88502.pth'
         }
     },
     'segformer_mitb3': {
         'cityscapes': {
-            'config': 'mmsegmentation/configs/segformer/segformer_mit-b3_8x1_1024x1024_160k_cityscapes.py',
+            'config': 'mmsegmentation/configs/segformer/segformer_mit-b3_8xb1-160k_cityscapes-1024x1024.py',
             'checkpoint': 'checkpoints/segformer_mit-b3_8x1_1024x1024_160k_cityscapes_20211206_224823-a8f8a177.pth'
         }
     },
@@ -93,7 +93,7 @@ _mmseg_configs_checkpoints = {
 def get_mmseg_model(dataset: str, name: str, device: torch.device,
                     mean: Tuple[float, float, float], std: Tuple[float, float, float]) -> nn.Module:
     config_checkpoint = _mmseg_configs_checkpoints[name][dataset]
-    segmentor = init_segmentor(**config_checkpoint, device=device)
+    segmentor = init_model(**config_checkpoint, device=device)
     model = MMSegNormalizer(model=segmentor, mean=mean, std=std)
     return model
 
